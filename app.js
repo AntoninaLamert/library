@@ -212,7 +212,7 @@
     $('ending-secrets').hidden = !world.secrets.size;
     $('ending-secrets').textContent = `Найдено секретов: ${game.foundSecrets.size} из ${world.secrets.size}.${game.foundSecrets.size === world.secrets.size && world.secrets.size ? ' Все истории библиотеки открыты.' : ''}`;
     $('ending-restart').textContent = game.ending.button;
-    document.title = 'История завершена — После закрытия';
+    document.title = 'История завершена — Ночь в библиотеке';
     $('ending-title').focus({ preventScroll: true });
     $('ending-panel').scrollIntoView({ block: 'start', behavior: 'instant' });
   }
@@ -287,7 +287,7 @@
       picture.removeAttribute('src');
       picture.alt = '';
     }
-    document.title = `${location.name} — После закрытия`;
+    document.title = `${location.name} — Ночь в библиотеке`;
     $('visit-label').textContent = game.firstVisit ? 'ПЕРВОЕ ПОСЕЩЕНИЕ' : 'ЗНАКОМОЕ МЕСТО';
     textBlock($('first-entry'), game.firstVisit ? location.firstEntry : '');
     textBlock($('description'), location.description, true);
@@ -553,6 +553,7 @@
     $('game').hidden = true;
     $('ending-panel').hidden = true;
     $('start-screen').hidden = false;
+    document.title = 'Ночь в библиотеке — текстовый квест';
     $('offline-world').hidden = true;
     updateSoundControl();
     $('start-title').focus({ preventScroll: true });
@@ -635,7 +636,7 @@
     });
   }
   $('recenter').addEventListener('click', recenter);
-  const restart = () => { game = null; void music.stop(); $('game').hidden = true; $('ending-panel').hidden = true; $('start-screen').hidden = false; updateSoundControl(); $('start-title').focus({ preventScroll: true }); };
+  const restart = () => { game = null; void music.stop(); $('game').hidden = true; $('ending-panel').hidden = true; $('start-screen').hidden = false; document.title = 'Ночь в библиотеке — текстовый квест'; updateSoundControl(); $('start-title').focus({ preventScroll: true }); };
   $('restart').addEventListener('click', restart);
   $('ending-restart').addEventListener('click', restart);
   $('begin-game').addEventListener('click', () => {
