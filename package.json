@@ -1,0 +1,10 @@
+{
+  "name": "after-closing-quest",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Статический текстовый квест с миром из TXT",
+  "scripts": {
+    "start": "node tools/preview.cjs",
+    "test": "node --test tests/world.test.cjs tests/stage3.test.cjs tests/music.test.cjs tests/loader.test.cjs"
+  }
+}

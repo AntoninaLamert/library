@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151c1b">
+  <meta name="description" content="Текстовый квест. Исследуйте мир, открывая его карту шаг за шагом.">
+  <title>После закрытия — текстовый квест</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./world.js"></script>
+  <script defer src="./world-loader.js"></script>
+  <script defer src="./music.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <!-- WORLD_SNAPSHOT_START -->
+<script id="world-snapshot" type="application/json">"ЛОКАЦИЯ\r\nЧитальный зал\r\n\r\nПЕРВЫЙ ВХОД\r\nОй... кажется, я зачитался. За окнами уже совсем темно, а в библиотеке подозрительно тихо. Похоже, все давно ушли.\r\n\r\nОПИСАНИЕ\r\nБольшой старый читальный зал. На столах лежат раскрытые книги, высокие окна отражают тусклый свет ламп. У стены стоит [книжный шкаф], рядом — [стол библиотекаря]. В углу виднеется [старое кресло].\r\n\r\nПЕРЕХОДЫ\r\nвосток -> Архив\r\nюг -> Холл\r\n\r\nОБЪЕКТЫ\r\n\r\n[книжный шкаф]\r\nНа полках стоят десятки старых книг. Некоторые явно не брали в руки много лет. Между двумя толстыми энциклопедиями застряла пожелтевшая открытка.\r\n\r\n[стол библиотекаря]\r\nНа столе лежат карточки читателей, несколько карандашей и раскрытый журнал. Последняя запись сделана несколько часов назад.\r\n\r\n[старое кресло]\r\nМягкое кресло с потёртыми подлокотниками. Под сиденьем валяются смятые бумажки и старая закладка.\r\n\r\nЛОКАЦИЯ\r\nСлужебное помещение\r\n\r\nПЕРВЫЙ ВХОД\r\nЗа неприметным проходом обнаруживается маленькая служебная комната. Здесь тесно, пахнет картоном, пылью и старой краской.\r\n\r\nОПИСАНИЕ\r\nВдоль стен стоят коробки с канцелярскими принадлежностями. В углу находится [шкафчик с инструментами], возле двери лежит [старая сумка], а над небольшим столом висит [доска объявлений].\r\n\r\nПЕРЕХОДЫ\r\nсевер -> Архив\r\nзапад -> Холл\r\n\r\nОБЪЕКТЫ\r\n\r\n[старая сумка]\r\nВнутри лежат тряпки, моток верёвки, несколько пустых коробочек и давно высохший маркер.\r\n\r\n[доска объявлений]\r\nСтарые расписания, объявления для сотрудников и несколько пожелтевших записок. Одна из них напоминает: «После работы проверяйте шкафы в архиве».\r\n\r\n[шкафчик с инструментами]\r\nВнутри лежат отвёртки, плоскогубцы, старые замки и тонкая металлическая {отмычка}.\r\n\r\nПРЕДМЕТЫ\r\n\r\n{отмычка}\r\nТонкая металлическая отмычка. Выглядит так, будто ею можно попробовать открыть простой старый замок.\r\n\r\nЛОКАЦИЯ\r\nАрхив\r\n\r\nПЕРВЫЙ ВХОД\r\nЗдесь заметно холоднее. Пахнет бумагой, пылью и старым деревом. Кажется, сюда посетители обычно вообще не заходят.\r\n\r\nОПИСАНИЕ\r\nУзкое помещение заставлено коробками и папками. У дальней стены стоит [металлический шкаф], рядом громоздится [стопка коробок]. Под маленьким окном находится [старый стол].\r\n\r\nПЕРЕХОДЫ\r\nзапад -> Читальный зал\r\nюг -> Служебное помещение\r\n\r\nОБЪЕКТЫ\r\n\r\n[стопка коробок]\r\nВнутри старые каталоги, списанные формуляры и пачки пожелтевших документов. На одной коробке от руки написано: «Не выбрасывать».\r\n\r\n[старый стол]\r\nСтол покрыт толстым слоем пыли. В ящиках лежат канцелярские кнопки, моток бечёвки, засохшая ручка и несколько пустых конвертов.\r\n\r\n[металлический шкаф]\r\nТяжёлый металлический шкаф. На дверце висит небольшой старый замок.\r\n\r\nПРЕДМЕТЫ\r\n\r\n{ключ}\r\nНебольшой тяжёлый ключ. На металлической бирке выбито число 1.\r\n\r\nЛОКАЦИЯ\r\nХолл\r\n\r\nПЕРВЫЙ ВХОД\r\nВот и главный холл. За стеклянной дверью видна ночная улица. До свободы буквально несколько метров.\r\n\r\nОПИСАНИЕ\r\nПросторный холл почти полностью погружён в темноту. У стены стоит [стойка библиотекаря], рядом — [вешалка]. Напротив находится [входная дверь].\r\n\r\nПЕРЕХОДЫ\r\nсевер -> Читальный зал\r\nвосток -> Служебное помещение\r\n\r\nОБЪЕКТЫ\r\n\r\n[стойка библиотекаря]\r\nНа стойке лежат бланки, настольная лампа и чашка с засохшим пакетиком чая. Под столешницей висит небольшая табличка: «Главный вход — дверь №1».\r\n\r\n[вешалка]\r\nНа вешалке остались старый шарф, складной зонт и чья-то забытая шляпа.\r\n\r\n[входная дверь]\r\nМассивная стеклянная дверь. Ручка опускается, но дверь не открывается. Рядом с ручкой находится старый замок.\r\n\r\nПЕРСОНАЖ\r\nКот\r\n\r\nОПИСАНИЕ\r\nБольшой серый кот с белой грудкой. Судя по его совершенно спокойному виду, закрытая библиотека его ничуть не беспокоит.\r\n\r\nМАРШРУТ\r\nЧитальный зал, Холл, Служебное помещение, Архив\r\n\r\nДИАЛОГ\r\nЧитальный зал\r\n\r\nКот: Всё-таки оторвался от книги?\r\nИгрок: Ты разговариваешь?!\r\nКот: Только после закрытия.\r\nИгрок: Меня здесь заперли. Как отсюда выбраться?\r\nКот: Через дверь, полагаю.\r\nИгрок: Очень смешно.\r\nКот: А вот чем её открыть — уже более интересный вопрос.\r\n\r\nДИАЛОГ\r\nСлужебное помещение\r\n\r\nИгрок: И что здесь может быть полезного?\r\nКот: Люди хранят инструменты там, где посетители обычно не ходят.\r\nИгрок: Ты мне на что-то намекаешь?\r\nКот: Я кот. Я вообще ни на что не намекаю.\r\nИгрок: Конечно.\r\nКот: Особенно на шкафчик в углу.\r\n\r\nДИАЛОГ\r\nАрхив\r\n\r\nИгрок: Здесь одни коробки и старые бумаги.\r\nКот: И шкаф.\r\nИгрок: Я вижу.\r\nКот: Тогда странно, что ты до сих пор разговариваешь со мной.\r\nИгрок: Он заперт.\r\nКот: В библиотеке много старых замков. Наверняка где-то найдётся что-нибудь подходящее.\r\n\r\nДИАЛОГ\r\nХолл\r\n\r\nИгрок: Вот дверь. Осталось только открыть её.\r\nКот: Наблюдательно.\r\nИгрок: Есть идеи?\r\nКот: Посмотри внимательнее на дверь.\r\nИгрок: И?\r\nКот: Люди любят ставить одинаковые номера на вещи, которые подходят друг к другу.\r\n\r\nСВЯЗАННЫЕ ОБЪЕКТЫ\r\n\r\n{отмычка} -> [металлический шкаф]\r\n\r\nРЕЗУЛЬТАТ\r\nЗамок немного сопротивляется, но затем щёлкает. Шкаф открывается, и внутри вы видите {ключ}.\r\n\r\n{ключ} -> [входная дверь]\r\n\r\nРЕЗУЛЬТАТ\r\nКлюч входит в замок. Раздаётся щелчок, и дверь открывается.\r\n\r\nДЕЙСТВИЕ\r\nВыйти из библиотеки\r\n\r\nКОНЕЦ ИГРЫ\r\n\r\nУСЛОВИЕ\r\nИгрок выбрал действие «Выйти из библиотеки».\r\n\r\nТЕКСТ\r\nВы толкаете дверь и выходите на ночную улицу. После тишины библиотеки шум города кажется неожиданно громким.\r\n\r\nУже снаружи вы оборачиваетесь.\r\n\r\nЗа стеклом в тёмном холле сидит серый кот.\r\n\r\nОн смотрит на вас несколько секунд, а затем неторопливо уходит в глубину библиотеки.\r\n\r\nКНОПКА\r\nНачать сначала\r\n"</script>
+<!-- WORLD_SNAPSHOT_END -->
+  <audio id="ambient-music" src="./media/Silent%20Library.mp3" preload="none" loop hidden></audio>
+  <div class="shell">
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="После закрытия, на главную"><span class="brand-mark" aria-hidden="true">◈</span> ПОСЛЕ ЗАКРЫТИЯ</a>
+      <div class="masthead-actions"><span class="edition">ТЕКСТОВЫЙ КВЕСТ <span> / </span> 01</span><button id="sound-toggle" class="sound-toggle" type="button" hidden aria-pressed="true" aria-label="Выключить музыку">♫ <span id="sound-label">Звук включён</span></button></div>
+    </header>
+    <main>
+      <div id="loading" class="notice" role="status">Открываем первую страницу…</div>
+      <section id="start-screen" class="start-screen" hidden aria-labelledby="start-title">
+        <div class="start-ornament" aria-hidden="true"><span>✦</span></div>
+        <p class="eyebrow">ИНТЕРАКТИВНАЯ ИСТОРИЯ</p>
+        <h1 id="start-title" tabindex="-1">После закрытия</h1>
+        <p class="start-intro">Вы засиделись за книгой и не заметили, как библиотека опустела. За окнами уже ночь. Исследуйте тихие залы, поговорите с их обитателями и найдите дорогу наружу.</p>
+        <button id="begin-game" class="begin-game" type="button">Начать игру <span aria-hidden="true">→</span></button>
+        <p class="start-hint">Тихая музыка сопровождает исследование библиотеки. Звук можно выключить во время игры.</p>
+        <div id="offline-world" class="offline-world" hidden>
+          <p>Мир загружен из сохранённой копии.</p>
+          <label class="file-label">Открыть другой TXT<input id="local-world-file" type="file" accept=".txt,text/plain"></label>
+        </div>
+      </section>
+      <section id="error-panel" class="notice error-panel" hidden aria-labelledby="error-title">
+        <p class="eyebrow">НЕ УДАЛОСЬ ОТКРЫТЬ МИР</p>
+        <h1 id="error-title">История пока недоступна</h1>
+        <p id="error-message"></p>
+        <p>Выберите <code>map.txt</code> из папки «Библиотека», чтобы открыть мир вручную.</p>
+        <label class="text-button file-label">Выбрать TXT-файл<input id="world-file" type="file" accept=".txt,text/plain"></label>
+        <button id="retry" class="text-button" type="button">Повторить загрузку</button>
+      </section>
+      <div id="game" hidden>
+        <article class="story" aria-labelledby="location-title">
+          <div class="chapter-line"><p class="eyebrow">ВАША ИСТОРИЯ <span class="small-rule"></span> <span id="visit-label">ПЕРВОЕ ПОСЕЩЕНИЕ</span></p><span class="chapter-symbol" aria-hidden="true">✦</span></div>
+          <h1 id="location-title" tabindex="-1"></h1>
+          <figure id="location-visual" class="location-visual" hidden>
+            <img id="location-image" width="1200" height="896" decoding="async" alt="">
+          </figure>
+          <div id="first-entry" class="first-entry"></div>
+          <div id="description" class="description"></div>
+          <ul id="movement-events" class="movement-events" hidden aria-label="События движения" aria-live="polite"></ul>
+          <section id="current-message" class="current-message" hidden aria-labelledby="message-title" aria-live="polite" aria-atomic="true">
+            <p id="message-label" class="eyebrow">ОСМОТР</p>
+            <h3 id="message-title" tabindex="-1"></h3>
+            <div id="message-text" class="message-text"></div>
+            <div id="pickup-receipt" class="pickup-receipt" hidden></div>
+            <div id="object-actions" class="object-actions" hidden></div>
+          </section>
+          <section id="inventory" class="inventory" hidden aria-labelledby="inventory-title">
+            <div class="inventory-heading"><h2 id="inventory-title">Инвентарь</h2><span id="inventory-count" aria-label="Количество предметов"></span></div>
+            <ul id="inventory-items" class="inventory-items" aria-label="Взятые предметы"></ul>
+          </section>
+          <section id="characters-panel" class="characters-panel" hidden aria-labelledby="characters-title">
+            <h2 id="characters-title">Здесь рядом</h2>
+            <div id="character-list" class="character-list"></div>
+            <div id="character-detail" class="character-detail" hidden>
+              <h3 id="character-name"></h3>
+              <div id="character-description"></div>
+              <button id="start-dialogue" type="button" class="dialogue-button">Поговорить</button>
+              <p id="no-dialogue" class="no-dialogue" hidden>Здесь пока не о чем поговорить.</p>
+            </div>
+          </section>
+          <section id="dialogue-panel" class="dialogue-panel" hidden aria-labelledby="dialogue-title">
+            <p class="eyebrow">РАЗГОВОР</p>
+            <h2 id="dialogue-title"></h2>
+            <ol id="dialogue-lines" class="dialogue-lines" aria-live="polite" aria-relevant="additions"></ol>
+            <button id="next-dialogue" class="dialogue-button" type="button">Далее</button>
+            <p id="dialogue-status" class="dialogue-status" hidden></p>
+          </section>
+        </article>
+        <section class="map-section" aria-labelledby="map-title">
+          <div class="map-heading"><div><p class="eyebrow">ШАГ ЗА ШАГОМ</p><h2 id="map-title">Карта исследования</h2></div><span class="explored"><span id="visited-count">1</span> <span id="visited-word">локация открыта</span></span></div>
+          <div class="map-frame">
+            <div id="map-viewport" class="map-viewport" role="group" aria-label="Карта мира. Нажмите на доступную соседнюю локацию, чтобы перейти.">
+              <div id="map-stage" class="map-stage"><svg id="map-links" aria-hidden="true"></svg><div id="map-nodes"></div></div>
+            </div>
+            <span class="compass" aria-hidden="true">С <span>↑</span></span>
+            <div class="map-controls" aria-label="Управление картой">
+              <button id="zoom-out" type="button" aria-label="Уменьшить карту" title="Уменьшить">−</button>
+              <button id="recenter" type="button" aria-label="Показать текущую локацию" title="К текущей локации">◎</button>
+              <button id="zoom-in" type="button" aria-label="Увеличить карту" title="Увеличить">+</button>
+            </div>
+          </div>
+          <div class="map-caption"><div class="legend" aria-label="Условные обозначения"><span class="legend-room"><i aria-hidden="true"></i>Комната</span><span class="legend-closed"><i aria-hidden="true"></i>Неизведано</span><span class="legend-person"><i aria-hidden="true"></i>Персонаж</span><span class="legend-player"><i aria-hidden="true"></i>Вы здесь</span></div><p>Нажмите на соседнюю локацию</p></div>
+          <p class="map-help">Карту можно перетаскивать. Кнопка ◎ возвращает к вам.</p>
+        </section>
+        <footer class="story-footer"><span>Каждая комната хранит свою историю.</span><button id="restart" type="button" class="restart">↺ Начать сначала</button></footer>
+      </div>
+      <section id="ending-panel" class="ending-panel" hidden aria-labelledby="ending-title">
+        <span class="ending-mark" aria-hidden="true">✦</span>
+        <p class="eyebrow">ПОСЛЕДНЯЯ СТРАНИЦА</p>
+        <h1 id="ending-title" tabindex="-1">История завершена</h1>
+        <div id="ending-text" class="description"></div>
+        <button id="ending-restart" type="button" class="ending-restart"></button>
+      </section>
+      <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+    </main>
+    <footer class="page-footer"><span>ИНТЕРАКТИВНАЯ ИСТОРИЯ</span><span>ИССЛЕДУЙТЕ. ЧИТАЙТЕ. НАХОДИТЕ ПУТЬ.</span></footer>
+  </div>
+</body>
+</html>
