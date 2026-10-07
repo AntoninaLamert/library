@@ -5,6 +5,6 @@
   "description": "Статический текстовый квест с миром из TXT",
   "scripts": {
     "start": "node tools/preview.cjs",
-    "test": "node --test tests/world.test.cjs tests/stage3.test.cjs tests/music.test.cjs tests/loader.test.cjs"
+    "test": "node --test tests/world.test.cjs tests/stage3.test.cjs tests/music.test.cjs tests/loader.test.cjs tests/secrets.test.cjs"
   }
 }

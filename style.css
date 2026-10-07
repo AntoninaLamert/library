@@ -125,3 +125,22 @@
 .offline-world .file-label{display:inline-block;padding:6px 12px;border:1px solid #5c6e54;border-radius:4px;color:#d3e1ca}
 .location-visual img{display:block;width:100%;height:auto;max-height:500px;aspect-ratio:4/3;object-fit:cover;object-position:center}
 @media(max-width:600px){.location-visual{margin-bottom:23px}.location-visual img{max-height:340px}}
+.secrets-panel{margin-top:25px;padding:19px 20px;border:1px solid #766649;border-radius:7px;background:linear-gradient(135deg,#44372545,#27271f55);overflow-wrap:anywhere}
+.secrets-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.secrets-heading h2{margin:0;font-size:21px;color:#e4cfaa}
+#secrets-count{margin:0;padding:6px 10px;border:1px solid #887047;border-radius:20px;color:#ecd5ac;font:12px/1.4 Arial,sans-serif;font-variant-numeric:tabular-nums}
+.secrets-hint{margin:13px 0 0;color:#bdb39e;font:13px/1.7 var(--serif)}
+#secrets-journal{margin-top:15px}
+#secrets-journal summary{padding:8px 0;min-height:40px;color:#d5c39f;cursor:pointer;font:12px/1.7 Arial,sans-serif}
+#secrets-journal summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.secrets-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:9px;list-style:none;margin:10px 0 0;padding:0}
+.secret-entry{display:flex;flex-direction:column;gap:5px;width:100%;min-height:44px;padding:11px 13px;background:#2d2b22;border:1px solid #726448;border-radius:5px;color:#e2d0af;text-align:left;font:13px/1.5 Arial,sans-serif;overflow-wrap:anywhere;touch-action:manipulation}
+.secret-entry small{font-size:10px;color:#b2aa94}
+.secret-entry:hover{background:#423927;border-color:#bf9e65}
+.secret-action{color:#533c19;background:#d3ad6338;border:1px solid #a78a55;text-decoration:underline;text-underline-offset:3px}
+.secret-action::before{content:'✦ ';text-decoration:none}
+.secret-action:hover{background:#d3ad6370;color:#37270c}
+.description .secret-action{color:#e5c791;background:#ae83322b}
+.current-message[data-kind=secret]{background:#eee0be;border-color:#cbb078;border-left-color:#aa8140}
+.ending-secrets{margin:28px 0 0;padding:17px 20px;border:1px solid #776441;border-radius:6px;color:#e4cca2;font:14px/1.7 Arial,sans-serif}
+@media(max-width:600px){.secrets-panel{padding:16px}.secrets-heading h2{font-size:20px}#secrets-count{font-size:11px}}

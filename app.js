@@ -66,7 +66,8 @@
       if (interactive) {
         for (const part of QuestWorld.textParts(paragraph)) {
           const entity = part.type === 'object' ? game.location.objects.get(part.name)
-            : part.type === 'item' ? game.location.items.get(part.name) : null;
+            : part.type === 'item' ? game.location.items.get(part.name)
+              : part.type === 'secret' ? game.location.secrets.get(part.name) : null;
           if (!entity) { p.append(document.createTextNode(part.text)); continue; }
           if (part.type === 'item' && game.inventory.has(entity.id)) {
             const taken = document.createElement('span');
@@ -78,11 +79,12 @@
           const button = document.createElement('button');
           button.type = 'button';
           button.className = `inline-action ${part.type}-action`;
-          button.dataset.action = part.type === 'object' ? 'inspect' : 'take';
+          button.dataset.action = part.type === 'object' ? 'inspect' : part.type === 'secret' ? 'secret' : 'take';
           button.dataset.name = entity.name;
-          button.textContent = entity.name;
-          button.setAttribute('aria-label', `${part.type === 'object' ? 'Осмотреть' : 'Взять'}: ${entity.name}`);
-          button.title = part.type === 'object' ? 'Осмотреть объект' : 'Взять в инвентарь';
+          const found = part.type === 'secret' && game.foundSecrets.has(entity.id);
+          button.textContent = `${entity.name}${found ? ' ✓' : ''}`;
+          button.setAttribute('aria-label', `${part.type === 'object' ? 'Осмотреть' : part.type === 'secret' ? found ? 'Перечитать секрет' : 'Исследовать находку' : 'Взять'}: ${entity.name}`);
+          button.title = part.type === 'object' ? 'Осмотреть объект' : part.type === 'secret' ? 'Прочитать историю' : 'Взять в инвентарь';
           p.append(button);
         }
       } else p.textContent = paragraph;
@@ -93,6 +95,7 @@
   function renderMessage() {
     const message = game.message;
     $('current-message').hidden = !message;
+    $('current-message').dataset.kind = message?.kind || '';
     $('message-title').textContent = message?.name || '';
     $('message-text').replaceChildren();
     $('pickup-receipt').replaceChildren();
@@ -101,7 +104,7 @@
     $('object-actions').hidden = true;
     if (!message) return;
     const isObject = ['object', 'result'].includes(message.kind);
-    $('message-label').textContent = message.kind === 'result' ? 'РЕЗУЛЬТАТ' : isObject ? 'ОСМОТР' : 'ПРЕДМЕТ';
+    $('message-label').textContent = message.kind === 'secret' ? message.isNew ? 'СЕКРЕТ НАЙДЕН · СОХРАНЁН В ЖУРНАЛЕ' : 'ИСТОРИЯ БИБЛИОТЕКИ' : message.kind === 'result' ? 'РЕЗУЛЬТАТ' : isObject ? 'ОСМОТР' : 'ПРЕДМЕТ';
     textBlock($('message-text'), message.text || 'Здесь пока нет подробного описания.', isObject);
     if (message.receipt) {
       const confirmation = document.createElement('p');
@@ -194,6 +197,7 @@
     $('dialogue-status').textContent = dialogue.status === 'interrupted' ? 'Разговор прерван.' : '';
   }
   function renderActivity() {
+    renderSecrets();
     renderEvents();
     renderCharacters();
     renderDialogue();
@@ -205,6 +209,8 @@
     $('game').hidden = true;
     $('ending-panel').hidden = false;
     textBlock($('ending-text'), game.ending.text);
+    $('ending-secrets').hidden = !world.secrets.size;
+    $('ending-secrets').textContent = `Найдено секретов: ${game.foundSecrets.size} из ${world.secrets.size}.${game.foundSecrets.size === world.secrets.size && world.secrets.size ? ' Все истории библиотеки открыты.' : ''}`;
     $('ending-restart').textContent = game.ending.button;
     document.title = 'История завершена — После закрытия';
     $('ending-title').focus({ preventScroll: true });
@@ -233,6 +239,30 @@
       fragment.append(li);
     }
     $('inventory-items').replaceChildren(fragment);
+  }
+  function renderSecrets() {
+    $('secrets-panel').hidden = !world.secrets.size;
+    const count = `Найдено ${game.foundSecrets.size} из ${world.secrets.size}`;
+    if ($('secrets-count').textContent !== count) $('secrets-count').textContent = count;
+    $('secrets-hint').hidden = !!game.foundSecrets.size;
+    $('secrets-journal').hidden = !game.foundSecrets.size;
+    const focused = $('secrets-list').contains(document.activeElement) ? document.activeElement.dataset.secretId : null;
+    const fragment = document.createDocumentFragment();
+    for (const secret of game.foundSecrets.values()) {
+      const li = document.createElement('li');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'secret-entry';
+      button.dataset.secretId = secret.id;
+      button.textContent = secret.name;
+      const origin = document.createElement('small');
+      origin.textContent = secret.location;
+      button.append(origin);
+      li.append(button);
+      fragment.append(li);
+    }
+    $('secrets-list').replaceChildren(fragment);
+    if (focused) [...$('secrets-list').querySelectorAll('button')].find(button => button.dataset.secretId === focused)?.focus({ preventScroll: true });
   }
   function visitWord(n) {
     if (n % 10 === 1 && n % 100 !== 11) return 'локация открыта';
@@ -278,16 +308,17 @@
       const button = event.target.closest('button[data-action]');
       if (!button) return;
       const taking = button.dataset.action === 'take';
-      const changed = taking ? game.take(button.dataset.name) : game.inspect(button.dataset.name);
+      const finding = button.dataset.action === 'secret';
+      const changed = finding ? game.findSecret(button.dataset.name) : taking ? game.take(button.dataset.name) : game.inspect(button.dataset.name);
       if (!changed) return;
       renderMessage();
       renderActivity();
-      if (taking) {
+      if (taking || finding) {
         textBlock($('description'), game.location.description, true);
         renderInventory();
       }
       // Кнопка предмета исчезает после взятия; фокус остаётся рядом с результатом.
-      if (taking || id === 'message-text') $('message-title').focus({ preventScroll: true });
+      if (taking || finding || id === 'message-text') $('message-title').focus({ preventScroll: true });
       $('current-message').scrollIntoView({ block: 'nearest', behavior: 'instant' });
     });
   }
@@ -295,6 +326,14 @@
     const button = event.target.closest('button[data-item-id]');
     if (button && game.inspectItem(button.dataset.itemId)) {
       renderMessage();
+      $('current-message').scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    }
+  });
+  $('secrets-list').addEventListener('click', event => {
+    const button = event.target.closest('button[data-secret-id]');
+    if (button && game.inspectSecret(button.dataset.secretId)) {
+      renderMessage();
+      $('message-title').focus({ preventScroll: true });
       $('current-message').scrollIntoView({ block: 'nearest', behavior: 'instant' });
     }
   });
@@ -602,6 +641,7 @@
   $('begin-game').addEventListener('click', () => {
     if (!world) return;
     game = new QuestWorld.Game(world);
+    $('secrets-journal').open = false;
     // Клик пользователя разрешает браузеру запустить фоновую запись.
     void playMusic(game.current);
     renderStory(true);

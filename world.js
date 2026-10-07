@@ -16,11 +16,11 @@
 
   function textParts(text) {
     const parts = [];
-    const references = /\[([^\[\]\r\n]+)\]|\{([^{}\r\n]+)\}/gu;
+    const references = /\[\[([^\[\]\r\n]+)\]\]|\[([^\[\]\r\n]+)\]|\{([^{}\r\n]+)\}/gu;
     let offset = 0;
     for (const match of text.matchAll(references)) {
       if (match.index > offset) parts.push({ type: 'text', text: text.slice(offset, match.index) });
-      parts.push({ type: match[1] !== undefined ? 'object' : 'item', name: (match[1] ?? match[2]).trim(), text: match[0] });
+      parts.push({ type: match[1] !== undefined ? 'secret' : match[2] !== undefined ? 'object' : 'item', name: (match[1] ?? match[2] ?? match[3]).trim(), text: match[0] });
       offset = match.index + match[0].length;
     }
     if (offset < text.length) parts.push({ type: 'text', text: text.slice(offset) });
@@ -29,18 +29,19 @@
 
   function parseEntities(text, type, location) {
     const entries = new Map();
-    const marker = type === 'object' ? /^\[([^\[\]]+)\]$/u : /^\{([^{}]+)\}$/u;
+    const marker = type === 'secret' ? /^\[\[([^\[\]]+)\]\]$/u : type === 'object' ? /^\[([^\[\]]+)\]$/u : /^\{([^{}]+)\}$/u;
+    const label = type === 'secret' ? 'секрет' : type === 'object' ? 'объект' : 'предмет';
     let current = null;
     for (const line of text.split('\n')) {
       const match = line.trim().match(marker);
       if (match) {
         const name = match[1].trim();
-        if (!name) throw new Error(`«${location}»: пустое название объекта или предмета.`);
-        if (entries.has(name)) throw new Error(`«${location}»: ${type === 'object' ? 'объект' : 'предмет'} «${name}» определён дважды.`);
+        if (!name) throw new Error(`«${location}»: пустое название (${label}).`);
+        if (entries.has(name)) throw new Error(`«${location}»: ${label} «${name}» определён дважды.`);
         current = { name, lines: [] };
         entries.set(name, current);
       } else if (current) current.lines.push(line);
-      else if (line.trim()) throw new Error(`«${location}»: перед описанием нужен маркер ${type === 'object' ? '[объекта]' : '{предмета}'}.`);
+      else if (line.trim()) throw new Error(`«${location}»: перед описанием нужен маркер ${type === 'secret' ? '[[секрета]]' : type === 'object' ? '[объекта]' : '{предмета}'}.`);
     }
     return new Map([...entries].map(([name, entity]) => [name, {
       id: JSON.stringify([location, name]), name, location, description: entity.lines.join('\n').trim()
@@ -106,7 +107,8 @@
       locations.set(name, {
         name, firstEntry: value('ПЕРВЫЙ ВХОД'), description: value('ОПИСАНИЕ'), exits,
         objects: parseEntities(value('ОБЪЕКТЫ'), 'object', name),
-        items: parseEntities(value('ПРЕДМЕТЫ'), 'item', name)
+        items: parseEntities(value('ПРЕДМЕТЫ'), 'item', name),
+        secrets: parseEntities(value('СЕКРЕТЫ'), 'secret', name)
       });
     }
     for (const location of locations.values()) {
@@ -117,6 +119,7 @@
       }
     }
     const world = { locations, start: locations.keys().next().value };
+    world.secrets = new Map([...locations.values()].flatMap(location => [...location.secrets.values()].map(secret => [secret.id, secret])));
     const field = (record, name) => record.sections.find(part => part.name === name)?.lines.join('\n').trim() || '';
     world.characters = new Map();
     for (const record of characters) {
@@ -227,6 +230,7 @@
       this.visited = new Set();
       this.inventory = new Map();
       this.foundItems = new Set();
+      this.foundSecrets = new Map();
       this.message = null;
       this.objectStates = new Map();
       this.completedLinks = new Set();
@@ -297,6 +301,24 @@
       const item = this.inventory.get(id);
       if (!item) return false;
       this.message = { kind: 'item', name: item.name, text: item.description, receipt: null };
+      return true;
+    }
+    findSecret(name) {
+      if (this.ending) return false;
+      const secret = this.location.secrets.get(name);
+      const currentText = this.location.description + '\n' + (['object', 'result'].includes(this.message?.kind) ? this.message.text : '');
+      if (!secret || !textParts(currentText).some(part => part.type === 'secret' && part.name === name)) return false;
+      const isNew = !this.foundSecrets.has(secret.id);
+      this.foundSecrets.set(secret.id, secret);
+      this.message = { kind: 'secret', name, text: secret.description, receipt: null, isNew };
+      if (isNew) this.advanceTurn();
+      return true;
+    }
+    inspectSecret(id) {
+      if (this.ending) return false;
+      const secret = this.foundSecrets.get(id);
+      if (!secret) return false;
+      this.message = { kind: 'secret', name: secret.name, text: secret.description, receipt: null, isNew: false };
       return true;
     }
     linkKey(object, link) { return JSON.stringify([object.id, link.id]); }
